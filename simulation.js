@@ -5,9 +5,15 @@ CUSTOM CONSOLE
 */
 
 let console = {};
+
 console.log = function(text) {
     document.getElementById("console").innerHTML += text + "<br>";
 }
+
+console.clear = function() {
+    document.getElementById("console").innerHTML = "";
+}
+
 window.console = console; // Just in case.
 
 /*
@@ -294,9 +300,15 @@ function characterTurn(character) {
     }
 }
 
+let paused = false;
+function togglePause() {
+    paused = !paused;
+}
+
 function nextDay() {
-    if (daysLeft < 1) return;
+    if (daysLeft < 1 || paused) return;
     day++;
+    console.clear();
     console.log("========== DAY " + day + " ==========");
 
     for (let i = 0; i < characters.length; i++) {
@@ -318,4 +330,4 @@ function nextDay() {
     document.getElementById("daysLeft").innerHTML = "Days left: " + daysLeft;
 }
 
-setInterval(nextDay, 50);
+setInterval(nextDay, 100);
